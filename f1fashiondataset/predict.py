@@ -1,15 +1,16 @@
-import pandas as pd
-import numpy as np
-from typing import Dict, Tuple
-from statsmodels.tsa.api import ExponentialSmoothing
 import multiprocessing
 from functools import partial
+from typing import Dict, Tuple
+
+import numpy as np
+import pandas as pd
+from statsmodels.tsa.api import ExponentialSmoothing
 from tqdm import tqdm
 
+from f1fashiondataset.constants import WEEKS_IN_A_YEAR
 
-def fit_predict_single_model(
-    ts: Tuple[str, pd.Series], model_name: str
-) -> Dict[str, np.array]:
+
+def fit_predict_single_model(ts: Tuple[str, pd.Series], model_name: str) -> Dict[str, np.array]:
     """
     This method is a method to fit and compute the prediction of a statistical method on a single time series.
     Two statistical methods are enabled with this function, the exponential smoothing (ets) and tbats model (tbats)
@@ -31,20 +32,16 @@ def fit_predict_single_model(
     ts_name = ts[0]
     stat_model = {ts_name: {}}
     if model_name == "ets":
-        model = ExponentialSmoothing(ts[1].values, seasonal_periods=52, seasonal="add")
+        model = ExponentialSmoothing(ts[1].values, seasonal_periods=WEEKS_IN_A_YEAR, seasonal="add")
         fitted_model = model.fit()
     else:
-        raise ValueError(
-            f"{mode_name} not implemented, provide a model name in ['snaive', 'ets']"
-        )
-    stat_model[ts_name] = fitted_model.forecast(52)
+        raise NotImplementedError(model_name)
+    stat_model[ts_name] = fitted_model.forecast(WEEKS_IN_A_YEAR)
 
     return stat_model
 
 
-def fit_predict(
-    data: pd.DataFrame, model_name: str, processes: int = 1
-) -> Dict[str, np.array]:
+def fit_predict(data: pd.DataFrame, model_name: str, processes: int = 1) -> Dict[str, np.array]:
     """
     This method is the method to compute a forecast for each time series present in a pd.DataFrame for
     methods that need to be fit.
@@ -96,17 +93,19 @@ def compute_snaive_prediction(data: pd.DataFrame) -> Dict[str, np.array]:
     
     - *model_prediction*: A dict linking the time series names to their associated statistical forecasts. 
     """
-    
 
     model_prediction = {}
     for ts_name in data:
-        model_prediction[ts_name] = data[ts_name].values[-52:]
+        model_prediction[ts_name] = data[ts_name].values[-WEEKS_IN_A_YEAR:]
 
     return model_prediction
 
 
 def predict(
-    data: pd.DataFrame, model_name: str, time_split: str = None, processes: int = 1
+    data: pd.DataFrame,
+    model_name: str,
+    time_split: str = None,
+    processes: int = 1
 ) -> pd.DataFrame:
     """
     This method is the main method to compute the forecast for each time series present in a pd.DataFrame.
@@ -136,15 +135,17 @@ def predict(
     if time_split is not None:
         data = data.loc[:time_split]
 
-    if model_name in ["ets"]:
+    if model_name == "ets":
         prediction = fit_predict(data, model_name, processes=processes)
     elif model_name == "snaive":
         prediction = compute_snaive_prediction(data)
+    else:
+        raise NotImplementedError(model_name)
 
     delta = pd.to_datetime(data.index[-1]) - pd.to_datetime(data.index[-2])
     prediction_index = [
         str((pd.to_datetime(data.index[-1]) + delta * (i + 1)).date())
-        for i in range(52)
+        for i in range(WEEKS_IN_A_YEAR)
     ]
     final_prediction = pd.DataFrame(prediction)
     final_prediction.index = prediction_index

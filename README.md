@@ -9,34 +9,40 @@ Paper link: ....
 
 ## Code Organisation
 
-This repository provide the F1 fashion dataset studied in the HERMES paper and a simple code base to reproduce the final results. For now only two benchmark methods are implemented -> ['snaive', 'ets'].
+This repository provides the F1 fashion dataset studied in the HERMES paper and a simple code base to reproduce the final results. For now only two benchmark methods are implemented: `snaive` and  `ets`.
 
-Fashion dataset is given in the ```data``` directory and divided in two ```.csv``` file :
- - f1_main.csv : the 10000 normalized and anonymized fashion time series.
- - f1_fashion_forward.csv : the 10000 normalized and anonymized external weak signals time series.
-
-```bash
-https://github.com/etidav/f1fashiondataset/tree/master/data/f1_main.csv
-https://github.com/etidav/f1fashiondataset/tree/master/data/f1_fashion_forward.csv
-```
+Fashion dataset is given in the ```data``` directory and divided in two ```.csv``` files:
+ - [the 10000 normalized and anonymized fashion time series](data/f1_main.csv)
+ - [the 10000 normalized and anonymized external weak signals time series](data/f1_fashion_forward.csv)
 
 ## Reproduce benchmark results
 
-To reproduce the HERMES benchmarks results, a simple code is provided to forecast the F1 dataset using 2 different benchmark methods ('snaive', 'ets').
+First, you should install this package:
+```bash
+pip install . # if you only want to install the package to run the benchmark
+pip install -e '.[dev]' # if you want to install the package in editable mode with dev dependencies to modify the code
+```
 
-A python script and a noteboook is provided :
+To reproduce the HERMES benchmarks results, a simple code is provided to forecast the F1 dataset using 2 different benchmark methods (`snaive`, `ets`).
 
- - Compute_HERMES_benchmarks_results.py : for the python script, make sure you are in a python environnement with the requirements provided is the setup.py file.
-         ```bash
-         python main.py --data {your_directory_name}/f1_main.csv --model_name snaive 
-         ```
- - Compute_HERMES_benchmarks_results.ipynb : A notebook file that provides an example with the 'snaive' model.
+A python script and a notebook are provided:
 
-For the ets model, it is recommanded to use multiprocessing. A parameter named processes is provided in each scipt (.py or notebook) and allow you to set the number of CPU that you want to use (default value = 1).
+- Compute_HERMES_benchmarks_results.py: for the python script, make sure you are in a python environment with the requirements provided is the setup.py file.
+```bash
+python benchmark.py --help # display the default parameters and their description
+python benchmark.py # run the benchmark on an example with snaive and ets
+python benchmark --dataset-path DATASET_PATH --model-names snaive ... # run the benchmark on DATASET_PATH with only snaive
+python benchmark --dataset-path DATASET_PATH --model-names ets ... # run the benchmark on DATASET_PATH with only ets
+python benchmark --dataset-path DATASET_PATH --model-names snaive --model-names ets ... # run the benchmark on DATASET_PATH with ets and snaive
+```
+
+- Compute_HERMES_benchmarks_results.ipynb : A notebook file that provides an example with the 'snaive' model.
+
+For the ets model, it is recommended to use multiprocessing. A parameter named processes is provided in each script (.py or notebook) and allow you to set the number of CPU that you want to use (default value = 1).
 
 ## HERMES paper Benchmark results
 
-The following tab summaryzes the results that can be reproduced with this code:
+The following tab summarizes the results that can be reproduced with this code:
 
 | Model         | Mase        | Accuracy    |
 | :-------------| :-----------| :-----------|
