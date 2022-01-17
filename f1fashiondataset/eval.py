@@ -1,12 +1,17 @@
-import pandas as pd
-from typing import Dict
+from typing import Dict, List
 
+import pandas as pd
+
+from f1fashiondataset.constants import WEEKS_IN_A_YEAR, THRESHOLD
+from f1fashiondataset.metrics import compute_accuracy, compute_mase
 from f1fashiondataset.predict import predict
-from f1fashiondataset.metrics import compute_mase, compute_accuracy
 
 
 def eval(
-    data: pd.DataFrame, prediction: pd.DataFrame, freq: int = 52, threshold: int = 0.05
+    data: pd.DataFrame,
+    prediction: pd.DataFrame,
+    freq: int = WEEKS_IN_A_YEAR,
+    threshold: int = THRESHOLD
 ) -> Dict[str, int]:
     """
     This method is the main method to compute the MASE and the Accuracy on a dataset.
@@ -35,7 +40,7 @@ def eval(
     - *paper_result*: a dict with the two final evaluation metric given in the HERMES paper: MASE and Accuracy
     """
     time_split = prediction.index[0]
-    ground_truth = data.loc[time_split:].iloc[:52]
+    ground_truth = data.loc[time_split:].iloc[:freq]
     histo_ground_truth = data.loc[:time_split].iloc[:-1]
 
     final_mase = compute_mase(
@@ -44,21 +49,21 @@ def eval(
     final_accuracy = compute_accuracy(
         ground_truth.values,
         prediction.values,
-        histo_ground_truth.iloc[-52:].values,
+        histo_ground_truth.iloc[-freq:].values,
         threshold=threshold,
     )
-    
     paper_result = {"MASE": final_mase, "Accuracy": final_accuracy}
 
     return paper_result
 
+
 def compute_benchmarck_metric(
     data: pd.DataFrame,
-    model_name: list,
+    model_names: List[str],
     time_split: str = None,
-    freq: int = 52,
-    threshold: int = 0.05,
-    processes: int = 1,
+    freq: int = WEEKS_IN_A_YEAR,
+    threshold: int = THRESHOLD,
+    processes: int = 1
 ) -> pd.DataFrame:
     """
     This method is the main method to reproduce the benchmarck results of the HERMES paper.
@@ -92,14 +97,14 @@ def compute_benchmarck_metric(
         MASE and Accuracy
     """
     if time_split is None:
-        time_split = data.index[-53]
+        time_split = data.index[-(freq + 1)]
 
     final_eval = {}
-    for i in model_name:
+    for i in model_names:
         model_pred = predict(data, i, time_split=time_split, processes=processes)
-        model_eval = eval(data, model_pred)
+        model_eval = eval(data, model_pred, freq=freq)
         final_eval[i] = model_eval
-    
+
     paper_result = pd.DataFrame(final_eval).T[["MASE", "Accuracy"]]
 
     return paper_result

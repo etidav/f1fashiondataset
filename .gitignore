@@ -143,3 +143,6 @@ dmypy.json
 
 # Windows Chocolatey
 *.nupkg
+
+# PyCharm
+.idea

@@ -1,9 +1,11 @@
 import numpy as np
-
 from sklearn.metrics import accuracy_score
 
+from f1fashiondataset.constants import WEEKS_IN_A_YEAR, THRESHOLD
+
+
 def compute_mase(
-    y_true: np.array, y_pred: np.array, y_histo: np.array, freq: int = 52
+    y_true: np.array, y_pred: np.array, y_histo: np.array, freq: int = WEEKS_IN_A_YEAR
 ) -> int:
     """
     This method is the method to compute the seasonal Mean Absolute Scaled Errror (MASE).
@@ -25,14 +27,13 @@ def compute_mase(
     """
     denominator = np.mean(np.abs(y_histo[freq:] - y_histo[:-freq]), axis=0)
     numerator = np.mean(np.abs(y_true - y_pred), axis=0)
-    final_mase = np.mean(numerator / denominator)
-
+    final_mase = (numerator / denominator).mean()
     return final_mase
 
 
 def compute_accuracy(
-    y_true: np.array, y_pred: np.array, y_histo: np.array, threshold: int = 0.05
-) -> int:
+    y_true: np.array, y_pred: np.array, y_histo: np.array, threshold: int = THRESHOLD
+) -> float:
     """
     This method is the method to compute the Accuracy based on a year-on-year classification.
     
@@ -53,12 +54,8 @@ def compute_accuracy(
     
     - *final_accuracy*: a float representing the final accuracy. 
     """
-    yoy_true = (np.mean(y_true, axis=0) - np.mean(y_histo, axis=0)) / np.mean(
-        y_histo, axis=0
-    )
-    yoy_pred = (np.mean(y_pred, axis=0) - np.mean(y_histo, axis=0)) / np.mean(
-        y_histo, axis=0
-    )
+    yoy_true = (np.mean(y_true, axis=0) - np.mean(y_histo, axis=0)) / np.mean(y_histo, axis=0)
+    yoy_pred = (np.mean(y_pred, axis=0) - np.mean(y_histo, axis=0)) / np.mean(y_histo, axis=0)
 
     true_label = 1 * (yoy_true > threshold) - 1 * (yoy_true < -threshold)
     pred_label = 1 * (yoy_pred > threshold) - 1 * (yoy_pred < -threshold)
