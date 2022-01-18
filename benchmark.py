@@ -8,7 +8,7 @@ from f1fashiondataset.eval import compute_benchmarck_metric
 
 
 def main(
-    dataset_path: pathlib.Path = typer.Option("data/example.csv", help="Path to the dataset"),
+    dataset_path: pathlib.Path = typer.Option("data/f1_main.csv", help="Path to the dataset"),
     model_names: List[str] = typer.Option(
         ["ets", "snaive"],
         help=
