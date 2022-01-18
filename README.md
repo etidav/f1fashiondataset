@@ -46,5 +46,5 @@ The following tab summarizes the results that can be reproduced with this code:
 
 | Model         | Mase        | Accuracy    |
 | :-------------| :-----------| :-----------|
-| snaive        | 0.880931    | 0.3571      |
-| ets           | 0.807054    | 0.4488      |
+| snaive        | 0.881       | 0.357       |
+| ets           | 0.807       | 0.449       |
