@@ -27,7 +27,7 @@ To reproduce the HERMES benchmarks results, a simple code is provided to forecas
 
 A python script and a notebook are provided:
 
-- Compute_HERMES_benchmarks_results.py: for the python script, make sure you are in a python environment with the requirements provided is the setup.py file.
+- [benchmark.py](benchmark.py): for the python script, make sure you are in a python environment with the requirements provided is the setup.py file.
 ```bash
 python benchmark.py --help # display the default parameters and their description
 python benchmark.py # run the benchmark on an example with snaive and ets
@@ -36,9 +36,7 @@ python benchmark --dataset-path DATASET_PATH --model-names ets ... # run the ben
 python benchmark --dataset-path DATASET_PATH --model-names snaive --model-names ets ... # run the benchmark on DATASET_PATH with ets and snaive
 ```
 
-- Compute_HERMES_benchmarks_results.ipynb : A notebook file that provides an example with the 'snaive' model.
-
-For the ets model, it is recommended to use multiprocessing. A parameter named processes is provided in each script (.py or notebook) and allow you to set the number of CPU that you want to use (default value = 1).
+For the ets model, it is recommended to use multiprocessing. A parameter named processes is provided and allow you to set the number of CPU that you want to use (default value = 1).
 
 ## HERMES paper Benchmark results
 
