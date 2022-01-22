@@ -12,7 +12,7 @@ Paper link: ....
 This repository provides the F1 fashion dataset studied in the HERMES paper and a simple code base to reproduce the final results. For now only two benchmark methods are implemented: `snaive` and  `ets`.  
 
 F1 fashion time series dataset is available at the link bellow :    
-http://files.heuritech.com/raw_files/f1_fashion_dataset.tar.xz  
+ - http://files.heuritech.com/raw_files/f1_fashion_dataset.tar.xz  
 
 It is divided in two ```.csv``` files:
  - the 10000 normalized and anonymized fashion time series : ```f1_main.csv```
