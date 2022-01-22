@@ -9,11 +9,14 @@ Paper link: ....
 
 ## Code Organisation
 
-This repository provides the F1 fashion dataset studied in the HERMES paper and a simple code base to reproduce the final results. For now only two benchmark methods are implemented: `snaive` and  `ets`.
+This repository provides the F1 fashion dataset studied in the HERMES paper and a simple code base to reproduce the final results. For now only two benchmark methods are implemented: `snaive` and  `ets`.  
 
-Fashion dataset is given in the ```data``` directory and divided in two ```.csv``` files:
- - [the 10000 normalized and anonymized fashion time series](data/f1_main.csv)
- - [the 10000 normalized and anonymized external weak signals time series](data/f1_fashion_forward.csv)
+F1 fashion time series dataset is available at the link bellow:    
+ - http://files.heuritech.com/raw_files/f1_fashion_dataset.tar.xz  
+
+It is divided in two ```.csv``` files:
+ - the 10000 normalized and anonymized fashion time series: ```f1_main.csv```
+ - the 10000 normalized and anonymized external weak signals time series: ```f1_fashion_forward.csv```
 
 ## Reproduce benchmark results
 
@@ -25,9 +28,10 @@ pip install -e '.[dev]' # if you want to install the package in editable mode wi
 
 To reproduce the HERMES benchmarks results, a simple code is provided to forecast the F1 dataset using 2 different benchmark methods (`snaive`, `ets`).
 
-A python script and a notebook are provided:
+A python script is provided:
 
-- [benchmark.py](benchmark.py): for the python script, make sure you are in a python environment with the requirements provided is the setup.py file.
+- [benchmark.py](benchmark.py): make sure you are in a python environment with the requirements provided is the setup.py file.
+
 ```bash
 python benchmark.py --help # display the default parameters and their description
 python benchmark.py # run the benchmark on an example with snaive and ets
