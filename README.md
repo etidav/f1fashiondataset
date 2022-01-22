@@ -11,12 +11,12 @@ Paper link: ....
 
 This repository provides the F1 fashion dataset studied in the HERMES paper and a simple code base to reproduce the final results. For now only two benchmark methods are implemented: `snaive` and  `ets`.  
 
-F1 fashion time series dataset is available at the link bellow :    
+F1 fashion time series dataset is available at the link bellow:    
  - http://files.heuritech.com/raw_files/f1_fashion_dataset.tar.xz  
 
 It is divided in two ```.csv``` files:
- - the 10000 normalized and anonymized fashion time series : ```f1_main.csv```
- - the 10000 normalized and anonymized external weak signals time series : ```f1_fashion_forward.csv```
+ - the 10000 normalized and anonymized fashion time series: ```f1_main.csv```
+ - the 10000 normalized and anonymized external weak signals time series: ```f1_fashion_forward.csv```
 
 ## Reproduce benchmark results
 
@@ -30,7 +30,7 @@ To reproduce the HERMES benchmarks results, a simple code is provided to forecas
 
 A python script is provided:
 
-- benchmarck.py: make sure you are in a python environment with the requirements provided is the setup.py file.
+- [benchmark.py](benchmark.py): make sure you are in a python environment with the requirements provided is the setup.py file.
 ```bash
 python benchmark.py --help # display the default parameters and their description
 python benchmark.py # run the benchmark on an example with snaive and ets
