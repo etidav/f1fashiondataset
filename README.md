@@ -11,7 +11,9 @@ Paper link: ....
 
 This repository provides the F1 fashion dataset studied in the HERMES paper and a simple code base to reproduce the final results. For now only two benchmark methods are implemented: `snaive` and  `ets`.
 
-Fashion dataset is given in the ```data``` directory and divided in two ```.csv``` files:
+F1 fashion time series dataset is available at the link bellow :
+(http://files.heuritech.com/raw_files/f1_fashion_dataset.tar.xz)
+It is divided in two ```.csv``` files:
  - [the 10000 normalized and anonymized fashion time series](data/f1_main.csv)
  - [the 10000 normalized and anonymized external weak signals time series](data/f1_fashion_forward.csv)
 
@@ -46,5 +48,5 @@ The following tab summarizes the results that can be reproduced with this code:
 
 | Model         | Mase        | Accuracy    |
 | :-------------| :-----------| :-----------|
-| snaive        | 0.880931    | 0.3571      |
-| ets           | 0.807054    | 0.4488      |
+| snaive        | 0.881       | 0.357       |
+| ets           | 0.807       | 0.449       |
