@@ -14,7 +14,7 @@ F1 fashion time series dataset is available at the link bellow :
 http://files.heuritech.com/raw_files/f1_fashion_dataset.tar.xz  
 It is divided in two ```.csv``` files:
  - the 10000 normalized and anonymized fashion time series : ```f1_main.csv```
- - the 10000 normalized and anonymized external weak signals time series : ```data/f1_fashion_forward.csv```
+ - the 10000 normalized and anonymized external weak signals time series : ```f1_fashion_forward.csv```
 
 ## Reproduce benchmark results
 
@@ -26,9 +26,9 @@ pip install -e '.[dev]' # if you want to install the package in editable mode wi
 
 To reproduce the HERMES benchmarks results, a simple code is provided to forecast the F1 dataset using 2 different benchmark methods (`snaive`, `ets`).
 
-A python script and a notebook are provided:
+A python script is provided:
 
-- Compute_HERMES_benchmarks_results.py: for the python script, make sure you are in a python environment with the requirements provided is the setup.py file.
+- benchmarck.py: make sure you are in a python environment with the requirements provided is the setup.py file.
 ```bash
 python benchmark.py --help # display the default parameters and their description
 python benchmark.py # run the benchmark on an example with snaive and ets
@@ -37,9 +37,7 @@ python benchmark --dataset-path DATASET_PATH --model-names ets ... # run the ben
 python benchmark --dataset-path DATASET_PATH --model-names snaive --model-names ets ... # run the benchmark on DATASET_PATH with ets and snaive
 ```
 
-- Compute_HERMES_benchmarks_results.ipynb : A notebook file that provides an example with the 'snaive' model.
-
-For the ets model, it is recommended to use multiprocessing. A parameter named processes is provided in each script (.py or notebook) and allow you to set the number of CPU that you want to use (default value = 1).
+For the ets model, it is recommended to use multiprocessing. A parameter named processes is provided and allow you to set the number of CPU that you want to use (default value = 1).
 
 ## HERMES paper Benchmark results
 
